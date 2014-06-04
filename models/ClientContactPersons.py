@@ -1,6 +1,6 @@
 import db
 class ClientContactPersons(object):
-  def __init__(self, ClientID, Suffix, LastName, FirstName, MiddleName, Landline, MobileNo, BirthDate)
+  def __init__(self, ClientID, Suffix, LastName, FirstName, MiddleName, Landline, MobileNo, BirthDate):
     self.ClientID=ClientID 
     self.Suffix=Suffix
     self.LastName=LastName 
@@ -12,7 +12,7 @@ class ClientContactPersons(object):
     
 
   def save(self):
-    sql = "insert into ClientContactPersons (ClientID, Suffix, LastName, FirstName, MiddleName, Landline, MobileNo, Birthdate) values (%s, %s, %s, %s, %s, %s, %s, %s) 
+    sql = "insert into ClientContactPersons (ClientID, Suffix, LastName, FirstName, MiddleName, Landline, MobileNo, Birthdate) values (%s, %s, %s, %s, %s, %s, %s, %s)"
     params = (self.ClientID, self.Suffix, self.LastName, self.FirstName, self.MiddleName, self.Landline, self.MobileNo, self.BirthDate)
     db.ins(sql,params)
     

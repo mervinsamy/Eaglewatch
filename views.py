@@ -9,12 +9,12 @@ def root():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+
   if request.method == 'POST':
 
     check = db.isUsernameExisting(request.form['username'], request.form['password'])
-
+    print check
     if check:
-      flash('Successfully logged in')
       session['user'] = request.form['username']
       session['usertype'] = db.getUserType(request.form['username'])
 
@@ -43,12 +43,14 @@ def login():
     else:
        flash('Please check your login credentials')
        return redirect(url_for('login'))
+  
   return render_template('login.html')
 
 @app.route('/logout')
 def logout():
   session.pop('user', None)
   session.pop('usertype', None)
+  flash('Successfully logged out')
   return redirect(url_for('login'))
 
 @app.route('/admin', methods=['POST', 'GET'])
@@ -156,7 +158,7 @@ def manhour(user=None):
 @app.route('/detachments/lists/', methods=['POST', 'GET'])
 def listDetachments(user=None):
   if 'usertype' in session:
-    if session['usertype'] == 'PrO' or session['usertype'] == 'ADM':
+    if session['usertype'] == 'PrO' or session['usertype'] == 'ADM' or session['usertype'] == 'Bi0':
       listDE = db.getAllDetachments()
       for DE in listDE:
         DE.setClientName(DE.ClientID)

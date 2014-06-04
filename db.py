@@ -27,7 +27,7 @@ SSSContributions = import_file.import_file('models/SSSContributions.py')
 SSSLoans = import_file.import_file('models/SSSLoans.py')
 UniformDeposits = import_file.import_file('models/UniformDeposits.py')
 
-mysql = MySQLdb.connect('localhost','AdminPayroll','Password','Eaglewatch')
+mysql = MySQLdb.connect('localhost','raymond','password','Eaglewatch')
 cur = mysql.cursor()
 
 def getOne(sql, params):
@@ -66,10 +66,13 @@ def checkPW(value):
     cur.execute(sql)
     res = cur.fetchone()
     List = list()
-    for row in res:
-      List.append(row)
-    List = "".join(List)
-    return List
+    if res is not None:
+      for row in res:
+        List.append(row)
+      List = "".join(List)
+      return List
+    else:
+      return None
   except MySQLdb.Error, e:
     print str(e.args[0]) + ': ' + str(e.args[1])
     return None
@@ -79,11 +82,15 @@ def getUserType(username):
     sql = "SELECT Type FROM OfficeEmployees WHERE Username = " + "'" + username + "'"
     cur.execute(sql)
     res = cur.fetchone()
-    List = list()
-    for row in res:
-      List.append(row)
-    List = "".join(List)
-    return List
+    List = list()   
+    if res is not None:
+      for row in res:
+        List.append(row)
+      List = "".join(List)
+      return List
+    else:
+      print 'hehehehe'
+      return None
   except MySQLdb.Error, e:
     print str(e.args[0]) + ': ' + str(e.args[1])
     return None
